@@ -1,0 +1,5 @@
+{
+  "name": "Feature Matrix Viewer",
+  "description": "A high-performance interactive CSV viewer designed for complex feature comparison matrices. It features frozen columns for easy navigation, search filtering, and status visualization.",
+  "requestFramePermissions": []
+}
