@@ -10,10 +10,6 @@ export const parseCSV = (csvText: string): ParsedCSV => {
     return { headers: [], rows: [] };
   }
 
-  // Regex to match CSV fields, handling quotes
-  // Matches a quoted string OR a sequence of non-comma characters
-  const reValid = /^\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*(?:,\s*(?:'[^'\\]*(?:\\[\S\s][^'\\]*)*'|"[^"\\]*(?:\\[\S\s][^"\\]*)*"|[^,'"\s\\]*(?:\s+[^,'"\s\\]+)*)\s*)*$/;
-  
   // A simpler split approach that respects quotes for this specific dataset
   const splitLine = (text: string) => {
     const result: string[] = [];

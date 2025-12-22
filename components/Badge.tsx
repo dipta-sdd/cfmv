@@ -5,7 +5,6 @@ interface BadgeProps {
 }
 
 const Badge: React.FC<BadgeProps> = ({ value }) => {
-  const lowerVal = value.toLowerCase();
   
   // Clean up the text for display (remove icons for the text part if needed, or keep them)
   // Logic: 
