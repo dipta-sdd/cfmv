@@ -1,5 +1,5 @@
 export const rawCsvData = `Feature,Description,CampaignBay F,CampaignBay,Disco Free,Disco Pro,Flycart Free,Flycart Pro,ACO Free,ACO Pro,Barn2 (Pro Only),TPT Free,TPT Pro,WowRevenue Free,WT SC Free,WT SC Pro,ADP Free,ADP Pro,WWP Free,WWP Pro
-Specific Products or Category Discount,Apply discounts to specific products or entire categories,✅ (Done),✅ (Done),✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅
+Specific Products or Category Discount,Apply discounts to specific products or entire categories,✅ (Done),✅ (Done),✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅
 Discounts on one or multiple Products,Set discounts for single or multiple products at once,✅ (Done),✅ (Done),✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅
 Discount to All Products or Few Product,Storewide discounts or selective product discounts,✅ (Done),✅ (Done),✅,✅,✅,✅,✅,✅,✅,❌,✅,✅,✅,✅,✅,✅,✅,✅
 Conditional Cart-Based Discounts,"Discounts based on cart contents, subtotal, or item count",❌,✅ (Upcoming),✅,✅,✅,✅,✅,✅,✅,❌,❌,✅,✅,✅,✅,✅,✅,✅
