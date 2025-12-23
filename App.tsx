@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { rawCsvData } from "./data/rawCsv";
 import { parseCSV } from "./utils/csvParser";
 import ComparisonTable from "./components/ComparisonTable";
@@ -6,9 +7,7 @@ import Roadmap from "./components/Roadmap";
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentView, setCurrentView] = useState<"matrix" | "roadmap">(
-    "matrix"
-  );
+  const location = useLocation();
 
   // Parse data only once on mount
   const { headers, rows } = useMemo(() => parseCSV(rawCsvData), []);
@@ -19,10 +18,7 @@ const App: React.FC = () => {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-[60] shadow-sm">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <div
-              className="flex items-center gap-3 cursor-pointer"
-              onClick={() => setCurrentView("matrix")}
-            >
+            <Link to="/" className="flex items-center gap-3">
               <div className="bg-indigo-600 text-white p-1.5 rounded-lg shadow-sm">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -36,35 +32,35 @@ const App: React.FC = () => {
               <h1 className="text-xl font-bold text-slate-800 tracking-tight">
                 FeatureMatrix<span className="text-indigo-600">.io</span>
               </h1>
-            </div>
+            </Link>
 
             {/* Navigation Tabs */}
             <nav className="flex space-x-4">
-              <button
-                onClick={() => setCurrentView("matrix")}
+              <Link
+                to="/"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  currentView === "matrix"
+                  location.pathname === "/"
                     ? "bg-indigo-50 text-indigo-700"
                     : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 Comparison
-              </button>
-              <button
-                onClick={() => setCurrentView("roadmap")}
+              </Link>
+              <Link
+                to="/roadmap"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  currentView === "roadmap"
+                  location.pathname === "/roadmap"
                     ? "bg-indigo-50 text-indigo-700"
                     : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
                 }`}
               >
                 Roadmap
-              </button>
+              </Link>
             </nav>
           </div>
 
           <div className="flex items-center gap-4">
-            {currentView === "matrix" && (
+            {location.pathname === "/" && (
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg
@@ -96,33 +92,42 @@ const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1920px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 h-[calc(100vh-4rem)] flex flex-col">
-        {currentView === "matrix" ? (
-          <>
-            <div className="mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div>
-                <h2 className="text-2xl font-bold text-slate-800">
-                  Competitor Analysis
-                </h2>
-                <p className="text-slate-500 text-sm mt-1">
-                  Comparing discount plugin features across top market
-                  competitors.
-                </p>
-              </div>
-            </div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <div className="mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                  <div>
+                    <h2 className="text-2xl font-bold text-slate-800">
+                      Competitor Analysis
+                    </h2>
+                    <p className="text-slate-500 text-sm mt-1">
+                      Comparing discount plugin features across top market
+                      competitors.
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex-1 relative">
-              <ComparisonTable
-                headers={headers}
-                rows={rows}
-                searchTerm={searchTerm}
-              />
-            </div>
-          </>
-        ) : (
-          <div className="flex-1 overflow-auto">
-            <Roadmap />
-          </div>
-        )}
+                <div className="flex-1 relative">
+                  <ComparisonTable
+                    headers={headers}
+                    rows={rows}
+                    searchTerm={searchTerm}
+                  />
+                </div>
+              </>
+            }
+          />
+          <Route
+            path="/roadmap"
+            element={
+              <div className="flex-1 overflow-auto">
+                <Roadmap />
+              </div>
+            }
+          />
+        </Routes>
       </main>
     </div>
   );
