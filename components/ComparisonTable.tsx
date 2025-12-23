@@ -90,6 +90,27 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
     return `${freeCount} / ${proCount}`;
   };
 
+  // console.log(rows.map((row) => ({feature: row[0], description: row[1],
+  //   campaignbay_free: row[2],
+  //   campaignbay_pro: row[3],
+  //   discoFree: row[4],
+  //   discoPro: row[5],
+  //   flycartFree: row[6],
+  //   flycartPro: row[7],
+  //   acoFree: row[8],
+  //   acoPro: row[9],
+  //   barn2ProOnly: row[10],
+  //   tptFree: row[11],
+  //   tptPro: row[12],
+  //   wowRevenueFree: row[13],
+  //   wtScFree: row[14],
+  //   wtScPro: row[15],
+  //   adpFree: row[16],
+  //   adpPro: row[17],
+  //   wwpFree: row[18],
+  //   wwpPro: row[19],
+  //   ratio: getRatio(row)})));
+
   return (
     <div className="relative w-full border border-slate-200 rounded-xl shadow-sm bg-white flex flex-col h-[calc(100vh-12rem)]">
       {/* Scrollable Container */}

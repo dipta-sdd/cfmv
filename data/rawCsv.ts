@@ -45,7 +45,7 @@ Shortcode for Discounted Products,Display discounted products via shortcode on a
 Custom Offer Text on Product Page,Display custom promotional text on product detail pages,❌,❌ (Missing),❌,❌,❌,❌,✅,✅,✅,❌,❌,❌,❌,❌,❌,✅,❌,❌
 Real-time Price Display,Show updated price in real-time as quantity changes,❌,❌ (Missing),❌,❌,❌,❌,✅,✅,❌,✅,✅,❌,❌,❌,❌,✅,❌,❌
 Visual Drag & Drop Interface,Easy visual interface to create discount rules,❌,❌ (Missing),❌,❌,❌,❌,❌,❌,✅,❌,❌,❌,❌,❌,❌,❌,❌,❌
-Setup Wizard,Guided wizard to quickly configure initial settings,❌,❌ (Missing),❌,❌,❌,❌,✅,✅,✅,❌,❌,❌,❌,❌,❌,❌,✅,✅
+Setup Wizard,Guided wizard to quickly configure initial settings,✅,✅,❌,❌,❌,❌,✅,✅,✅,❌,❌,❌,❌,❌,❌,❌,✅,✅
 Total Savings Display in Cart,Show total amount saved prominently in cart/checkout,❌,❌ (Missing),❌,❌,❌,❌,❌,❌,✅,✅,✅,❌,❌,❌,✅,✅,✅,✅
 Exclude Products from Discounts,Ability to exclude specific products from discount rules,✅ (Done),✅ (Done),✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅
 Variation-Level Discounts,Apply discounts to specific product variations,✅ (Done),✅ (Done),✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅,✅
