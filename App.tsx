@@ -4,8 +4,38 @@ import { rawCsvData } from "./data/rawCsv";
 import { parseCSV } from "./utils/csvParser";
 import ComparisonTable from "./components/ComparisonTable";
 import Roadmap from "./components/Roadmap";
+import Stats from "./components/Stats";
 
-const App: React.FC = () => {
+import { StatsProvider, useStats } from "./contexts/StatsContext";
+
+const NavbarStats: React.FC = () => {
+  const { stats } = useStats();
+  if (!stats) return null;
+
+  return (
+    <div className="hidden lg:flex items-center gap-4 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+      <div className="flex flex-col items-end leading-none">
+        <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+          Downloads
+        </span>
+        <span className="text-sm font-bold text-slate-800">
+          {stats.totalDownloads.toLocaleString()}
+        </span>
+      </div>
+      <div className="h-6 w-px bg-slate-200"></div>
+      <div className="flex flex-col items-start leading-none">
+        <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+          Today
+        </span>
+        <span className="text-sm font-bold text-green-600">
+          +{stats.today.toLocaleString()}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const AppContent: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
 
@@ -56,10 +86,21 @@ const App: React.FC = () => {
               >
                 Roadmap
               </Link>
+              <Link
+                to="/stats"
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  location.pathname === "/stats"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                Stats
+              </Link>
             </nav>
           </div>
 
           <div className="flex items-center gap-4">
+            <NavbarStats />
             {location.pathname === "/" && (
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -127,9 +168,25 @@ const App: React.FC = () => {
               </div>
             }
           />
+          <Route
+            path="/stats"
+            element={
+              <div className="flex-1 overflow-auto">
+                <Stats />
+              </div>
+            }
+          />
         </Routes>
       </main>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <StatsProvider>
+      <AppContent />
+    </StatsProvider>
   );
 };
 
