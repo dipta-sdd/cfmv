@@ -67,7 +67,7 @@ const AppContent: React.FC = () => {
             {/* Navigation Tabs */}
             <nav className="flex space-x-4">
               <Link
-                to="/"
+                to="/cfmv"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === "/"
                     ? "bg-indigo-50 text-indigo-700"
@@ -77,7 +77,7 @@ const AppContent: React.FC = () => {
                 Comparison
               </Link>
               <Link
-                to="/roadmap"
+                to="/cfmv/roadmap"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === "/roadmap"
                     ? "bg-indigo-50 text-indigo-700"
@@ -87,7 +87,7 @@ const AppContent: React.FC = () => {
                 Roadmap
               </Link>
               <Link
-                to="/stats"
+                to="/cfmv/stats"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === "/stats"
                     ? "bg-indigo-50 text-indigo-700"
@@ -135,7 +135,7 @@ const AppContent: React.FC = () => {
       <main className="flex-1 max-w-[1920px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 h-[calc(100vh-4rem)] flex flex-col">
         <Routes>
           <Route
-            path="/"
+            path="/cfmv"
             element={
               <>
                 <div className="mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -161,7 +161,7 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
-            path="/roadmap"
+            path="/cfmv/roadmap"
             element={
               <div className="flex-1 overflow-auto">
                 <Roadmap />
@@ -169,7 +169,7 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
-            path="/stats"
+            path="/cfmv/stats"
             element={
               <div className="flex-1 overflow-auto">
                 <Stats />
