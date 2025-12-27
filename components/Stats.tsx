@@ -48,60 +48,34 @@ const Stats: React.FC = () => {
           {/* Decorative Elements */}
           <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-50 rounded-full blur-3xl opacity-60"></div>
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-50 rounded-full blur-3xl opacity-60"></div>
+          {/* Today Pill */}
 
-          {/* Main Count */}
-          <div className="relative z-10 flex flex-col items-center">
-            <div className="flex items-start text-slate-900 leading-none font-sans tracking-tight">
-              <span className="text-[30vw] font-bold tracking-tighter">
-                {stats.totalDownloads}
-              </span>
-              {/* Arrow Icon */}
+          <div className="rounded-full  px-3 z-10 flex items-start leading-none  absolute top-4 right-4 bg-green-900">
+            <div className="  flex items-center justify-center">
               <svg
-                className="w-12 h-12 text-indigo-600 mt-4 ml-6"
+                className="w-[6vw] h-[6vw] text-green-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={3}
-                  d="M5 10l7-7m0 0l7 7m-7-7v18"
-                  transform="rotate(45 12 12)"
+                  strokeWidth={2}
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
                 />
               </svg>
             </div>
-
-            <div className="mt-2 text-sm font-bold tracking-[0.2em] text-slate-400 uppercase">
-              Total Downloads
-            </div>
-
-            {/* Today Pill */}
-            <div className="w-[58vw]mt-8 bg-slate-50 border border-slate-200 rounded-full px-[2vw] py-[2vw] flex items-center gap-3 shadow-sm">
-              <div className=" rounded-full bg-green-100 flex items-center justify-center">
-                <svg
-                  className="w-[10vw] h-[10vw] text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-              </div>
-              <div className="flex flex-col items-start leading-none">
-                <span className="text-[10vw] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
-                  Today
-                </span>
-                <span className="text-[10vw] font-bold text-slate-900">
-                  +{stats.today}
-                </span>
-              </div>
+            <span className="text-[6vw] font-bold text-green-100">
+              +{stats.today}
+            </span>
+          </div>
+          {/* Main Count */}
+          <div className="relative z-10 flex flex-col items-center p-4">
+            <div className="flex items-start text-slate-900 leading-none font-sans tracking-tight">
+              <span className="text-[28vw] font-bold tracking-tighter">
+                {stats.totalDownloads}
+              </span>
             </div>
           </div>
         </div>

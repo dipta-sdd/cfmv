@@ -37,6 +37,7 @@ const NavbarStats: React.FC = () => {
 
 const AppContent: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   // Parse data only once on mount
@@ -47,7 +48,7 @@ const AppContent: React.FC = () => {
       {/* Navigation Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-[60] shadow-sm">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             <Link to="/" className="flex items-center gap-3">
               <div className="bg-indigo-600 text-white p-1.5 rounded-lg shadow-sm">
                 <svg
@@ -65,9 +66,9 @@ const AppContent: React.FC = () => {
             </Link>
 
             {/* Navigation Tabs */}
-            <nav className="flex space-x-4">
+            <nav className="hidden md:flex space-x-4">
               <Link
-                to="/cfmv"
+                to="/"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === "/"
                     ? "bg-indigo-50 text-indigo-700"
@@ -77,7 +78,7 @@ const AppContent: React.FC = () => {
                 Comparison
               </Link>
               <Link
-                to="/cfmv/roadmap"
+                to="/roadmap"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === "/roadmap"
                     ? "bg-indigo-50 text-indigo-700"
@@ -87,7 +88,7 @@ const AppContent: React.FC = () => {
                 Roadmap
               </Link>
               <Link
-                to="/cfmv/stats"
+                to="/stats"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   location.pathname === "/stats"
                     ? "bg-indigo-50 text-indigo-700"
@@ -127,15 +128,95 @@ const AppContent: React.FC = () => {
                 />
               </div>
             )}
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 -mr-2 text-slate-600 hover:text-indigo-600 transition-colors rounded-lg hover:bg-slate-50"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 shadow-lg absolute top-16 left-0 w-full z-50">
+            <nav className="flex flex-col space-y-2">
+              <Link
+                to="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  location.pathname === "/"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                Comparison
+              </Link>
+              <Link
+                to="/roadmap"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  location.pathname === "/roadmap"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                Roadmap
+              </Link>
+              <Link
+                to="/stats"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                  location.pathname === "/stats"
+                    ? "bg-indigo-50 text-indigo-700"
+                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                Stats
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-[1920px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 h-[calc(100vh-4rem)] flex flex-col">
         <Routes>
           <Route
-            path="/cfmv"
+            path="/"
             element={
               <>
                 <div className="mb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -161,7 +242,7 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
-            path="/cfmv/roadmap"
+            path="/roadmap"
             element={
               <div className="flex-1 overflow-auto">
                 <Roadmap />
@@ -169,7 +250,7 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
-            path="/cfmv/stats"
+            path="/stats"
             element={
               <div className="flex-1 overflow-auto">
                 <Stats />
