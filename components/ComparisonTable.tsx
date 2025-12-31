@@ -5,19 +5,45 @@ interface ComparisonTableProps {
   headers: string[];
   rows: string[][];
   searchTerm: string;
+  hiddenColumns?: string[];
 }
 
 const ComparisonTable: React.FC<ComparisonTableProps> = ({
   headers,
   rows,
   searchTerm,
+  hiddenColumns = [],
 }) => {
-  // Filter rows based on the Feature name (first column) or Description (second column)
+  // Memoize visible comparison columns (indices ≥ 2)
+  const visibleComparisonColumns = React.useMemo(() => {
+    return headers
+      .map((header, index) => ({ header, index }))
+      .slice(2)
+      .filter((col) => !hiddenColumns.includes(col.header));
+  }, [headers, hiddenColumns]);
+
+  // Filter rows based on the Feature name (first column), Description (second column),
+  // and whether there is any visible data (blank/cross check)
   const filteredRows = rows.filter((row) => {
     const feature = row[0]?.toLowerCase() || "";
     const description = row[1]?.toLowerCase() || "";
     const term = searchTerm.toLowerCase();
-    return feature.includes(term) || description.includes(term);
+    const matchesSearch = feature.includes(term) || description.includes(term);
+
+    // If search term is present, we might want to still show it?
+    // User request: "hide any row if all columns are blank or cross"
+    // Usually invalid rows should be hidden regardless of search, unless specifically searching for them?
+    // Let's apply the rule strictly: if it doesn't have visible valid data, hide it.
+
+    const hasMeaningfulData = visibleComparisonColumns.some((col) => {
+      const cellValue = row[col.index];
+      // Check if "blank" (empty/null) or "cross" (❌)
+      if (!cellValue || cellValue.trim() === "") return false;
+      if (cellValue.includes("❌")) return false;
+      return true; // It has data (e.g. ✅, 🟡, 'Coming Soon', etc.)
+    });
+
+    return matchesSearch && hasMeaningfulData;
   });
 
   if (headers.length === 0) {
@@ -41,6 +67,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
     headers.forEach((h, idx) => {
       // Exclude Description/Feature cols (0,1) and CampaignBay
       if (idx < 2) return;
+      if (hiddenColumns.includes(h)) return; // Skip hidden columns
       if (h.toLowerCase().includes("campaignbay")) return;
 
       let name = h;
@@ -65,7 +92,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
       else map[name].proIdx = idx;
     });
     return map;
-  }, [headers]);
+  }, [headers, hiddenColumns]);
 
   // Helper to calculate ratio
   const getRatio = (rowData: string[]) => {
@@ -89,27 +116,6 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
 
     return `${freeCount} / ${proCount}`;
   };
-
-  // console.log(rows.map((row) => ({feature: row[0], description: row[1],
-  //   campaignbay_free: row[2],
-  //   campaignbay_pro: row[3],
-  //   discoFree: row[4],
-  //   discoPro: row[5],
-  //   flycartFree: row[6],
-  //   flycartPro: row[7],
-  //   acoFree: row[8],
-  //   acoPro: row[9],
-  //   barn2ProOnly: row[10],
-  //   tptFree: row[11],
-  //   tptPro: row[12],
-  //   wowRevenueFree: row[13],
-  //   wtScFree: row[14],
-  //   wtScPro: row[15],
-  //   adpFree: row[16],
-  //   adpPro: row[17],
-  //   wwpFree: row[18],
-  //   wwpPro: row[19],
-  //   ratio: getRatio(row)})));
 
   return (
     <div className="relative w-full border border-slate-200 rounded-xl shadow-sm bg-white flex flex-col h-[calc(100vh-12rem)]">
@@ -139,12 +145,12 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
               </th>
 
               {/* Scrollable Comparison Columns */}
-              {headers.slice(2).map((header, index) => (
+              {visibleComparisonColumns.map((col) => (
                 <th
-                  key={index}
+                  key={col.index}
                   className="p-4 border-b border-slate-200 min-w-[140px] text-center whitespace-nowrap hover:bg-slate-100 transition-colors"
                 >
-                  {header}
+                  {col.header}
                 </th>
               ))}
 
@@ -185,13 +191,13 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({
                   </td>
 
                   {/* Scrollable Data Cells */}
-                  {row.slice(2).map((cellData, cellIndex) => (
+                  {visibleComparisonColumns.map((col) => (
                     <td
-                      key={cellIndex}
+                      key={col.index}
                       className="p-3 text-center border-slate-100 min-w-[140px]"
                     >
                       <div className="flex justify-center">
-                        <Badge value={cellData} />
+                        <Badge value={row[col.index]} />
                       </div>
                     </td>
                   ))}

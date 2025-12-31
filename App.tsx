@@ -5,6 +5,7 @@ import { parseCSV } from "./utils/csvParser";
 import ComparisonTable from "./components/ComparisonTable";
 import Roadmap from "./components/Roadmap";
 import Stats from "./components/Stats";
+import ColumnSelector from "./components/ColumnSelector";
 
 import { StatsProvider, useStats } from "./contexts/StatsContext";
 
@@ -42,6 +43,16 @@ const AppContent: React.FC = () => {
 
   // Parse data only once on mount
   const { headers, rows } = useMemo(() => parseCSV(rawCsvData), []);
+
+  const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
+
+  const toggleColumn = (column: string) => {
+    setHiddenColumns((prev) =>
+      prev.includes(column)
+        ? prev.filter((c) => c !== column)
+        : [...prev, column]
+    );
+  };
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900 flex flex-col font-sans selection:bg-indigo-100 selection:text-indigo-800">
@@ -229,6 +240,13 @@ const AppContent: React.FC = () => {
                       competitors.
                     </p>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <ColumnSelector
+                      allHeaders={headers.slice(2)}
+                      hiddenColumns={hiddenColumns}
+                      onToggleColumn={toggleColumn}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex-1 relative">
@@ -236,6 +254,7 @@ const AppContent: React.FC = () => {
                     headers={headers}
                     rows={rows}
                     searchTerm={searchTerm}
+                    hiddenColumns={hiddenColumns}
                   />
                 </div>
               </>
