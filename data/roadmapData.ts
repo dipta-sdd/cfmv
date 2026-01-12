@@ -3,6 +3,7 @@ export interface RoadmapItem {
     type: "Free" | "Pro";
     desc: string;
     score?: string;
+    status?: 'Done' | 'In Progress' | 'Not Started' | 'Upcoming' | 'Cancelled' | 'On Hold';
 }
 
 export interface Sprint {
@@ -23,18 +24,21 @@ export const roadmapData: Sprint[] = [
                 type: "Free",
                 desc: 'Essential for B2B/Wholesale users (e.g., "Wholesale" or "VIP" roles).',
                 score: "5/3",
+                status: "Done"
             },
             {
                 title: "Customer-Specific Pricing & Group Discounts",
                 type: "Pro",
                 desc: "Targeted pricing for specific individuals.",
                 score: "2/5",
+                status: "Done"
             },
             {
                 title: "Product in Cart Based on Condition",
                 type: "Pro",
                 desc: '"Buy A, get a discount on B" logic.',
                 score: "5/2",
+                status: "Done"
             },
         ],
     },

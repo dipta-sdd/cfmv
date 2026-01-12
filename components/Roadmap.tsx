@@ -52,7 +52,7 @@ const Roadmap: React.FC = () => {
                       {item.type === "Free" ? (
                         <div className="w-4 h-4 rounded-full bg-green-500 ring-4 ring-white shadow-sm mt-1.5 translate-x-0.5"></div>
                       ) : (
-                        <div className="w-4 h-4 rounded-full bg-purple-500 ring-4 ring-white shadow-sm mt-1.5 translate-x-0.5"></div>
+                        <div className="w-4 h-4 rounded-full bg-pink-500 ring-4 ring-white shadow-sm mt-1.5 translate-x-0.5"></div>
                       )}
                     </div>
 
