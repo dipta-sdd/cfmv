@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { roadmapData } from "../data/roadmapData";
 
-
-
 const Roadmap: React.FC = () => {
+  // Calculate progress percentage based on "Done" items
+  const progressPercentage = useMemo(() => {
+    // Flatten all items with their global index
+    const allItems = roadmapData.flatMap((sprint) => sprint.items);
+    const totalItems = allItems.length + roadmapData.length; // items + sprint headers
+
+    // Find the last index of a "Done" item
+    let lastDoneIndex = -1;
+    let currentIndex = 0;
+
+    roadmapData.forEach((sprint) => {
+      currentIndex++; // Sprint header
+      sprint.items.forEach((item) => {
+        if (item.status === "Done") {
+          lastDoneIndex = currentIndex;
+        }
+        currentIndex++;
+      });
+    });
+
+    if (lastDoneIndex === -1) return 0;
+    return ((lastDoneIndex + 1) / totalItems) * 100;
+  }, []);
+
   return (
     <div className="max-w-4xl mx-auto py-8">
       <div className="mb-10 text-center">
@@ -17,8 +39,16 @@ const Roadmap: React.FC = () => {
       </div>
 
       <div className="relative">
-        {/* Continuous Vertical Line */}
+        {/* Continuous Vertical Line (Gray base) */}
         <div className="absolute left-8 top-0 bottom-10 w-0.5 bg-slate-200"></div>
+
+        {/* Green Progress Line (Overlay) */}
+        {progressPercentage > 0 && (
+          <div
+            className="absolute left-8 top-0 w-0.5 bg-green-500 z-[1]"
+            style={{ height: `${progressPercentage}%` }}
+          ></div>
+        )}
 
         <div className="space-y-12">
           {roadmapData.map((sprint) => (
@@ -49,10 +79,18 @@ const Roadmap: React.FC = () => {
                   <div key={idx} className="relative flex gap-8">
                     {/* Small Node on the main line */}
                     <div className="flex-shrink-0 w-16 flex justify-center z-10">
-                      {item.type === "Free" ? (
-                        <div className="w-4 h-4 rounded-full bg-green-500 ring-4 ring-white shadow-sm mt-1.5 translate-x-0.5"></div>
+                      {item.status === "Done" ? (
+                        item.type === "Free" ? (
+                          <div className="w-4 h-4 rounded-full bg-green-500 ring-2 ring-green-500 shadow-sm mt-1.5 translate-x-0.5"></div>
+                        ) : (
+                          <div className="w-4 h-4 rounded-full bg-pink-500 ring-2 ring-pink-500 shadow-sm mt-1.5 translate-x-0.5"></div>
+                        )
                       ) : (
-                        <div className="w-4 h-4 rounded-full bg-pink-500 ring-4 ring-white shadow-sm mt-1.5 translate-x-0.5"></div>
+                        item.type === "Free" ? (
+                          <div className="w-4 h-4 rounded-full bg-green-200 ring-2 ring-green-500 shadow-sm mt-1.5 translate-x-0.5"></div>
+                        ) : (
+                          <div className="w-4 h-4 rounded-full bg-pink-200 ring-2 ring-pink-500 shadow-sm mt-1.5 translate-x-0.5"></div>
+                        )
                       )}
                     </div>
 
