@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
-import { rawCsvData } from "./data/rawCsv";
-import { parseCSV } from "./utils/csvParser";
+import { parseCSV } from "./data/csvParser";
 import ComparisonTable from "./components/ComparisonTable";
 import Roadmap from "./components/Roadmap";
 import Stats from "./components/Stats";
@@ -42,7 +41,8 @@ const AppContent: React.FC = () => {
   const location = useLocation();
 
   // Parse data only once on mount
-  const { headers, rows } = useMemo(() => parseCSV(rawCsvData), []);
+  const { headers, rows } = useMemo(() => parseCSV(), []);
+
 
   const [hiddenColumns, setHiddenColumns] = useState<string[]>([]);
 
